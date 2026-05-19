@@ -1,0 +1,65 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = "file:./dev.db"
+}
+
+model User {
+  id        String   @id @default(cuid())
+  name      String
+  role      String   // EMPLOYEE, MANAGER, ADMIN
+  managerId String?
+  manager   User?    @relation("ManagerToEmployee", fields: [managerId], references: [id])
+  team      User[]   @relation("ManagerToEmployee")
+  goals     Goal[]   @relation("OwnerToGoals")
+  createdAt DateTime @default(now())
+}
+
+model Goal {
+  id          String   @id @default(cuid())
+  title       String
+  description String?
+  thrustArea  String
+  uom         String   // Numeric_Min, Numeric_Max, Percent_Min, Percent_Max, Timeline, Zero
+  target      Float
+  weightage   Float    // percentage
+  status      String   @default("Draft") // Draft, Pending, Approved, Locked
+  ownerId     String
+  owner       User     @relation("OwnerToGoals", fields: [ownerId], references: [id])
+  checkIns    CheckIn[]
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model CheckIn {
+  id              String   @id @default(cuid())
+  goalId          String
+  goal            Goal     @relation(fields: [goalId], references: [id])
+  quarter         String   // Q1, Q2, Q3, Q4
+  actual          Float
+  status          String   // Not Started, On Track, Completed
+  managerComment  String?
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+}
+
+model AuditLog {
+  id        String   @id @default(cuid())
+  action    String
+  userId    String
+  details   String
+  createdAt DateTime @default(now())
+}
+
+model EscalationLog {
+  id          String   @id @default(cuid())
+  ruleTrigger String
+  targetUser  String
+  level       String   // Employee, Manager, HR
+  message     String
+  resolved    Boolean  @default(false)
+  createdAt   DateTime @default(now())
+}
