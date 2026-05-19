@@ -34,7 +34,7 @@ export async function POST(request: Request) {
       where: { role: { in: ['EMPLOYEE', 'MANAGER'] } },
       select: { id: true }
     });
-    targets = employees.map(e => e.id);
+    targets = employees.map((e: any) => e.id);
   } else if (targetUserId) {
     targets = [targetUserId];
   } else {

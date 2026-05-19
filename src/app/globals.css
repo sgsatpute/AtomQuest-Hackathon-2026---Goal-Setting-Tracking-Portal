@@ -86,6 +86,7 @@ p {
   text-decoration: none;
   background: linear-gradient(to right, #4F46E5, #8B5CF6);
   -webkit-background-clip: text;
+  background-clip: text;
   -webkit-text-fill-color: transparent;
 }
 

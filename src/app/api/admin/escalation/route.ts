@@ -40,7 +40,7 @@ export async function POST() {
   });
 
   for (const user of users) {
-    const totalWeight = user.goals.reduce((acc, g) => acc + g.weightage, 0);
+    const totalWeight = user.goals.reduce((acc: number, g: any) => acc + g.weightage, 0);
     if (totalWeight < 100) {
       const log = await prisma.escalationLog.create({
         data: {

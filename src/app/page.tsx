@@ -24,7 +24,7 @@ export default async function Home() {
         </div>
 
         <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
-          {users.map((user) => (
+          {users.map((user: any) => (
             <form action="/api/auth/login" method="POST" key={user.id}>
               <input type="hidden" name="userId" value={user.id} />
               <button type="submit" className="role-btn">

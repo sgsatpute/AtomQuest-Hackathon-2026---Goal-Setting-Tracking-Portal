@@ -39,7 +39,7 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: 'Minimum weightage per goal is 10%' }, { status: 400 });
   }
 
-  const currentTotalWeight = userGoals.reduce((sum, g) => sum + g.weightage, 0);
+  const currentTotalWeight = userGoals.reduce((sum: number, g: any) => sum + g.weightage, 0);
   if (currentTotalWeight + data.weightage > 100) {
     return NextResponse.json({ error: 'Total weightage cannot exceed 100%' }, { status: 400 });
   }

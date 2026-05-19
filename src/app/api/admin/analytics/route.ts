@@ -8,7 +8,7 @@ export async function GET() {
 
   // Calculate Distribution by Thrust Area
   const distribution: Record<string, number> = {};
-  goals.forEach(g => {
+  goals.forEach((g: any) => {
     distribution[g.thrustArea] = (distribution[g.thrustArea] || 0) + 1;
   });
 
@@ -16,8 +16,8 @@ export async function GET() {
   const qoq: Record<string, number> = { Q1: 0, Q2: 0, Q3: 0, Q4: 0 };
   let totalCheckIns = 0;
   
-  goals.forEach(g => {
-    g.checkIns.forEach(ci => {
+  goals.forEach((g: any) => {
+    g.checkIns.forEach((ci: any) => {
       if (ci.status === 'Completed' || ci.status === 'On Track') {
         if (qoq[ci.quarter] !== undefined) {
           qoq[ci.quarter]++;
